@@ -4161,12 +4161,16 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   float: left;
   height: 50px;
   padding: 15px 15px;
-  font-size: 18px;
   line-height: 20px;
+  color: #000;
+  font-family: cursive;
+  margin: 5px;
+  font-size: x-large;
 }
 .navbar-brand:hover,
 .navbar-brand:focus {
   text-decoration: none;
+  color: #000;
 }
 .navbar-brand > img {
   display: block;
@@ -4177,6 +4181,11 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
     margin-left: -15px;
   }
 }
+
+ul,li{
+  list-style: none;
+}
+
 .navbar-toggle {
   position: relative;
   float: right;

@@ -1,28 +1,34 @@
 <?php
 //Declarig variables to prevent errors
 //$name = ""; //first name
+$first_name = ""; //first name
+$last_name = ""; //last name
 $username = ""; //username
 $email = ""; //email
 $pass = ""; //pass
 //$gender = ""; //gender
-//$profile_pic = ""; //profile pic
+$profile_pic = ""; //profile pic
 $error_array = array();//holds error messages
 
 if(isset($_POST['sign_btn'])) {
 
   //Registration form values
 
-  //Name
-  //$name = htmlspecialchars($_POST['sign_name']); //remove html tags
-  //$fname = str_replace(' ', '', $fname); //remove spaces
-  //$name = ucwords($name); //uppercase first letter of everyword
-  //$_SESSION['sign_name']=$name;//Stores first name into session variables
-
   //Username
   $username = htmlspecialchars($_POST['sign_username']); //remove html tags
-  //$fname = str_replace(' ', '', $fname); //remove spaces
-  // $username = ucfirst(strtolower($username)); //uppercase first letter
   $_SESSION['sign_username']=$username;//Stores user name into session variables
+
+  $first_name = strip_tags($_POST['sign_firstname']); //Remove html tags
+	// $first_name = str_replace(' ', '', $first_name); //remove spaces
+	$first_name = ucfirst(strtolower($first_name)); //Uppercase first letter
+	$_SESSION['sign_firstname'] = $first_name; //Stores first name into session variable
+
+	//Last name
+	$last_name = strip_tags($_POST['sign_lastname']); //Remove html tags
+	// $last_name = str_replace(' ', '', $last_name); //remove spaces
+	$last_name = ucfirst(strtolower($last_name)); //Uppercase first letter
+	$_SESSION['sign_lastname'] = $last_name; //Stores last name into session variable
+
 
   //Email
   $email = strip_tags($_POST['sign_email']); //remove html tags
@@ -69,8 +75,6 @@ if(isset($_POST['sign_btn'])) {
     echo "Email already in use <br>";
   }
   
-  //Check if username already exists
-  $username_check=mysqli_query($con,"SELECT email FROM users WHERE email='$email'");
 
   //Count no of rows returned
   $num_rows = mysqli_num_rows($username_check);
@@ -83,6 +87,12 @@ if(isset($_POST['sign_btn'])) {
     array_push($error_array,"Your username must be between 3 and 25 characters <br>");
     echo "Your username must be between 3 and 25 characters <br>";
   }
+  if(strlen($first_name) > 25 || strlen($first_name) < 3) {
+		array_push($error_array, "Your first name must be between 3 and 25 characters<br>");
+	}
+	if(strlen($last_name) > 25 || strlen($last_name) < 3) {
+		array_push($error_array,  "Your last name must be between 3 and 25 characters<br>");
+	}
   if(!preg_match("/\d/", $pass)){
     array_push($error_array, "Your password cannot contain any special chatacters <br>");
     echo "Your password must contain at least one digit <br>";
@@ -108,12 +118,13 @@ if(isset($_POST['sign_btn'])) {
     echo "Your password must be between 8 and 30 characters <br>";
   }
 
+  //Check if username already exists
+  $check_username_query=mysqli_query($con,"SELECT username FROM users WHERE username='$username'");
+
   //Check username already exists or not
-  $check_username_query = mysqli_query($con, "SELECT username FROM users WHERE username='$username'");
-  if(mysqli_num_rows($check_username_query)!=0){
-    array_push($error_array, "Username already in use. Please try another Username");
-    echo "Username already in use. Please try another Username<br>";
-    $check_username_query = mysqli_query($con, "SELECT username FROM users WHERE username='$username'");
+  while(mysqli_num_rows($check_username_query) != 0){
+    array_push($error_array, "Username already exist. Please try another username");
+    echo "Username already exist. Please try another username<br>";
   }
 
   if ($username == trim($username) && strpos($username, ' ') !== false){
@@ -125,7 +136,7 @@ if(isset($_POST['sign_btn'])) {
 
     $pass = password_hash($pass, PASSWORD_DEFAULT);  //Encrypt password before sending to database
 
-    $query = mysqli_query($con, "INSERT INTO users VALUES ('', '$username', '$email', '$pass', '$profile_pic', '$date', '$vkey', '', '0', '0', '0', 'no', ',$username,')");
+    $query = mysqli_query($con, "INSERT INTO users VALUES ('', '$username', '$first_name', '$last_name', '$email', '$pass', '$profile_pic', '$date', '$vkey', '', '0', '0', '0', 'no', ',$username,')");
 
     array_push($error_array,"You are ready now!!! Login into your account!!!<br>");
 
@@ -165,8 +176,8 @@ if(isset($_POST['log_btn'])) {
 		while($row = mysqli_fetch_array($check_database_query)){
 			if(password_verify($pass, $row['pass'])){
         $username = $row['username'];
-        setcookie('emailbun', $email, time()+756864000);
-        setcookie('passbun', $pass, time()+756864000);
+        setcookie('emailbun', $email, time()+31536000);
+        setcookie('passbun', $pass, time()+31536000);
  
 				$user_closed_query = mysqli_query($con, "SELECT * FROM users WHERE email='$email' AND user_closed='yes'");
 				if(mysqli_num_rows($user_closed_query) == 1) {

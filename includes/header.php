@@ -82,14 +82,12 @@ else {
                 
                 ?>
                 <ul>
-					<li>
-						<a href="<?php echo $userLoggedIn; ?>" style="text-decoration: none;" ><img src="<?php echo $user['profile_pic']; ?>" width="20px" style="height: 20px; border-radius: 50%; width: 20px;"></a>
-					</li>
+					
                     <li>
                         <a href="index.php" style="text-decoration: none;"><h3><i class="fas fa-home"></i></h3></a>
                     </li>
                      <li>
-						<a href="javascript:void(0);" onclick="getDropdownData('<?php echo $userLoggedIn; ?>', 'message')"
+						<a href="messages.php"
 						style="text-decoration: none;"><h3><i class="fas fa-inbox"></i></h3>
 						<?php
 							if($num_messages>0){
@@ -118,16 +116,20 @@ else {
 						</a>
 					</li>
 					<li>
+						<a href="<?php echo $userLoggedIn; ?>" style="text-decoration: none;" ><img src="<?php echo $user['profile_pic']; ?>" width="20px" style="height: 20px; border-radius: 50%; width: 20px;"></a>
+					</li>
+					<li>
                         <a href="settings.php" style="text-decoration: none;"><h3><i class="fas fa-toolbox"></i></h3></a>
                     </li>
-					<li>
+					<!-- <li>
                         <a href="includes/handlers/logout.php" style="text-decoration: none;"><h3>Logout</h3></a>
-					</li>
+					</li> -->
                 </ul>
             </div>
-        </header>
+        
         <div class="dropdown_data_window" style="height:0px; border:none;"></div>
 		<input type="hidden" id="dropdown_data_type" value="">
+		</header>
 </div>
 
 

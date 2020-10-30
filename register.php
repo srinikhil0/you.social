@@ -42,11 +42,11 @@ require 'includes/form_handlers/register_handler.php';
               <input type="text" name="sign_username" placeholder="Username" />
             </div>
             <div class="input-field">
-              <i class="fas fa-user"></i>
+              <i class="fas fa-signature"></i>
               <input type="text" name="sign_firstname" placeholder="First Name" />
             </div>
             <div class="input-field">
-              <i class="fas fa-user"></i>
+              <i class="fas fa-signature"></i>
               <input type="text" name="sign_lastname" placeholder="Last Name" />
             </div>
             <div class="input-field">

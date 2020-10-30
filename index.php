@@ -49,15 +49,19 @@ if(isset($_POST['post'])){
 
 ?>
 
-<div class="user_details1 column">
+<div class="user_details1">
    <a href="<?php echo $userLoggedIn; ?>"> <img src="<?php echo $user['profile_pic']; ?>"></a>
    <div class="user_details_left_right1">
 		<a href="<?php echo $userLoggedIn; ?>">
 			<?php 
 				echo $user['username'];
+				
 			?>
 		</a>
 		<br>
+		<?php echo $user['first_name'] . " " . $user['last_name']; ?>
+		<br>
+		
 		<?php echo "Posts: " . $user['num_posts']. "<br>"; 
 			echo "Likes: " . $user['num_likes'];
 		?>
@@ -70,11 +74,11 @@ if(isset($_POST['post'])){
 		<textarea name="post_text" id="post_text" placeholder="Share what ever you know"></textarea>
 		
 		
-		<button class="submit-button state-0" name="post" id="post_button" value="Post"><span class="pre-state-msg">Post</span></button>
+		<button class="submit-button" name="post" id="post_button" value="Post">Post</button>
 		<input type="file" name="fileToUpload" id="fileToUpload">
-   </form><hr><br>
+   </form><br>
       
-   <div class="posts_area"></div><hr>
+   <div class="posts_area"></div>
    <img id="loading" src="assets/images/icons/loading2.gif">
 </div>
 
